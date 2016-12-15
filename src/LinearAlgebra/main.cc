@@ -10,14 +10,18 @@ int main()
 	Vector vec1 = Vector(3, arr1);
 	Vector vec2 = Vector(3, arr2);
 	Vector vec3 = Vector(3, arr3);
+	Vector vec4 = Vector(3, 1);
 
-	vec1.addScalar(1);
-	vec2.multiplyScaler(2);
-	vec3.divideScaler(3);
+	vec1.AddScalar(1);
+	vec2.MultiplyScaler(2);
+	vec3.DivideScaler(3);
 
 	vec1.PrintVector();
 	vec2.PrintVector();
 	vec3.PrintVector();
+	vec4.PrintVector();
+
+	std::cout << "Dot Product of vector 1 and 2: " << vec1.Dot(&vec2) << std::endl;
 
 	std::cout << "did i work? " << std::endl;
 

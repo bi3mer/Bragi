@@ -1,7 +1,7 @@
 class Vector 
 {
 	public:
-		Vector(const int);
+		Vector(const int, const float);
 		Vector(const int, float[]);
 
 		~Vector();
@@ -17,9 +17,12 @@ class Vector
 		void PrintVector();
 
 		// Scalar Calculations
-		void addScalar(const float);
-		void multiplyScaler(const float);
-		void divideScaler(const float);
+		void AddScalar(const float);
+		void MultiplyScaler(const float);
+		void DivideScaler(const float);
+
+		// Vector Calculations
+		float Dot(Vector*);
 
 	private: 
 		int size;
