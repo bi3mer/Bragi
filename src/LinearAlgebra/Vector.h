@@ -29,6 +29,8 @@ class Vector
 		void Add(Vector*, Vector*);
 		void Sub(Vector*, Vector*);
 		float Dot(Vector*);
+		bool IsPerpindicular(Vector*);
+		float Length();
 
 	private: 
 		int size;

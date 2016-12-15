@@ -6,12 +6,14 @@ int main()
 	float arr1[] = {0,1,2};
 	float arr2[] = {3,4,5};
 	float arr3[] = {6,7,8};
+	float arr4[] = {2,2,-2};
 
 	Vector vec = Vector(3);
 	Vector vec1 = Vector(3, arr1);
 	Vector vec2 = Vector(3, arr2);
 	Vector vec3 = Vector(3, arr3);
 	Vector vec4 = Vector(3, 1);
+	Vector perp = Vector(3, arr4);
 
 	vec1.AddScalar(1);
 	vec2.MultiplyScaler(2);
@@ -33,6 +35,13 @@ int main()
 	vec1.Sub(&vec2, &vec);
 	std::cout << "Subtraction of vector 1 and 2: " << std::endl;
 	vec.PrintVector();
+
+	// test perpindicular
+	std::cout << "is perpindicular: " << vec1.IsPerpindicular(&perp) << std::endl;
+
+	// test length
+	vec1.PrintVector();
+	std::cout << "length: " << vec1.Length() << std::endl;
 
 
 	std::cout << "did i work? " << std::endl;

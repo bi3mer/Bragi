@@ -1,5 +1,6 @@
 #include <iostream>
 #include <stddef.h>
+#include <math.h> 
 #include "Vector.h"
 
 /// --------------------Constructors --------------------
@@ -165,6 +166,27 @@ float Vector::Dot(Vector* vector)
 	return total;
 }
 
+// Check if this vector is perpindicular to the passed vector
+// by computing the dot product and seeing if the result is 0.
+bool Vector::IsPerpindicular(Vector* vector)
+{
+	return this->Dot(vector) == 0;
+}
+
+// Compute the length of the vector.
+float Vector::Length()
+{
+	float total = 0;
+
+	for(int i = 0; i < this->size; ++i)
+	{
+		// square the item in the vector and add it to total
+		total += pow(this->vec[i], 2.0);
+	}
+
+	// return the square root of the total
+	return sqrt(total);
+}
 
 
 
