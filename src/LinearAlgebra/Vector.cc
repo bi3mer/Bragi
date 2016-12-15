@@ -176,16 +176,9 @@ bool Vector::IsPerpindicular(Vector* vector)
 // Compute the length of the vector.
 float Vector::Length()
 {
-	float total = 0;
-
-	for(int i = 0; i < this->size; ++i)
-	{
-		// square the item in the vector and add it to total
-		total += pow(this->vec[i], 2.0);
-	}
-
-	// return the square root of the total
-	return sqrt(total);
+	// return the square root of the dot product which is
+	// representative of the length of a vector.
+	return sqrt(this->Dot(this));
 }
 
 
