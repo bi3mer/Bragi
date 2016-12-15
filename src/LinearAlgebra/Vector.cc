@@ -23,7 +23,13 @@ Vector::Vector(const int size, const float val)
 Vector::Vector(const int size, float data[])
 {
 	this->size = size;
-	this->vec = data;
+
+	// copy array into new one
+	this->vec = new float[size];
+	for(int i = 0; i < size; ++i)
+	{
+		this->vec[i] = data[i];
+	}
 }
 
 // -------------------- Destructor --------------------
@@ -62,7 +68,6 @@ void Vector::PrintVector()
 		{
 			std::cout << ", ";
 		}
-		
 	}
 
 	std::cout << std::endl;
@@ -108,6 +113,38 @@ void Vector::DivideScaler(const float scalar)
 }
 
 /// -------------------- Vector Calculations --------------------
+// add this vector and another to create a new vector
+void Vector::Add(Vector* vecToAdd, Vector* vecReference)
+{
+	// check for mismatching vectors
+	if(this->size != vecToAdd->size && this->size != vecReference->size)
+	{
+		throw std::overflow_error("Mismatching sizes for addition of two vectors.");
+	}
+
+	// add vectors
+	for(int i = 0; i < this->size; ++i)
+	{
+		vecReference->GetVectorArray()[i] = this->vec[i] + vecToAdd->GetVectorArray()[i];
+	}
+}
+
+// subtract this vector and another to create a new vecor
+void Vector::Sub(Vector* vecToSub, Vector* vecReference)
+{
+	// check for mismatching vectors
+	if(this->size != vecToSub->size && this->size != vecReference->size)
+	{
+		throw std::overflow_error("Mismatching sizes for subraction of two vectors.");
+	}
+
+	// add vectors
+	for(int i = 0; i < this->size; ++i)
+	{
+		vecReference->GetVectorArray()[i] = this->vec[i] - vecToSub->GetVectorArray()[i];
+	}
+}
+
 // compute dot product between two vectors. If sizes don't match
 // overflow_error error is thrown
 float Vector::Dot(Vector* vector)
@@ -115,7 +152,7 @@ float Vector::Dot(Vector* vector)
 	// check if sizes don't match
 	if(this->size != vector->size)
 	{
-		throw std::overflow_error("Vector sizes do not match.");
+		throw std::overflow_error("Mismatching sizes for dot product of two vectors.");
 	}
 
 	// compute dot product

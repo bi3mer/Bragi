@@ -1,9 +1,11 @@
 class Vector 
 {
 	public:
-		Vector(const int, const float);
+		// constructors
+		Vector(const int, const float val=0);
 		Vector(const int, float[]);
 
+		// destructor
 		~Vector();
 
 		// Getters and Setters
@@ -20,8 +22,12 @@ class Vector
 		void AddScalar(const float);
 		void MultiplyScaler(const float);
 		void DivideScaler(const float);
+		// modulus scalar
+		// pow scalar
 
 		// Vector Calculations
+		void Add(Vector*, Vector*);
+		void Sub(Vector*, Vector*);
 		float Dot(Vector*);
 
 	private: 
