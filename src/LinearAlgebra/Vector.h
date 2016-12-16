@@ -1,13 +1,8 @@
+#include <string>
+
 class Vector 
 {
 	public:
-		// constructors
-		Vector(const int, const float val=0);
-		Vector(const int, float[]);
-
-		// destructor
-		~Vector();
-
 		// Getters and Setters
 		int GetSize();
 
@@ -16,6 +11,7 @@ class Vector
 		float* GetVectorArray();
 
 		// Usefulc ommands
+		std::string ToString();
 		void PrintVector();
 
 		// Scalar Calculations
@@ -31,6 +27,15 @@ class Vector
 		float Dot(Vector*);
 		bool IsPerpindicular(Vector*);
 		float Length();
+		void ConvertToUnitVector();
+
+		// constructors
+		Vector(const int, const float val=0);
+		Vector(const int, float[]);
+		Vector(Vector*);
+
+		// destructor
+		~Vector();
 
 	private: 
 		int size;

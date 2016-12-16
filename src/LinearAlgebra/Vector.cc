@@ -3,42 +3,6 @@
 #include <math.h> 
 #include "Vector.h"
 
-/// --------------------Constructors --------------------
-// Create vector of size x with values y
-Vector::Vector(const int size, const float val)
-{
-	this->size = size;
-
-	// initialize array and set all values to val
-	this->vec = new float[size];
-	for(int i = 0; i < size; ++i)
-	{
-		this->vec[i] = val;
-	}
-}
-
-// Create vector with size y that will be the same size
-// as the array passed in. No checking is done to account
-// for ensuring this, so if a mistake is made it is on the
-// user's end. 
-Vector::Vector(const int size, float data[])
-{
-	this->size = size;
-
-	// copy array into new one
-	this->vec = new float[size];
-	for(int i = 0; i < size; ++i)
-	{
-		this->vec[i] = data[i];
-	}
-}
-
-// -------------------- Destructor --------------------
-Vector::~Vector()
-{
-	// pass
-}
-
 // -------------------- Get and Set Methods --------------------
 int Vector::GetSize()
 {
@@ -57,21 +21,29 @@ float* Vector::GetVectorArray()
 }
 
 /// -------------------- useful commands --------------------
-void Vector::PrintVector()
+// conver the array that represents the vector into a
+// string with commas between values.
+std::string Vector::ToString()
 {
+	std::string str = "";
+
 	for(int i = 0; i < this->size; ++i)
 	{
-		// print value
-		std::cout << this->vec[i];
+		str += std::to_string(this->vec[i]);
 
-		// check if should print comma or not
-		if(i < this->size - 1)
+		if(i < this-> size - 1)
 		{
-			std::cout << ", ";
+			str += ", ";
 		}
 	}
 
-	std::cout << std::endl;
+	return str;
+}
+
+// print result of ToString with a new line.
+void Vector::PrintVector()
+{
+	std::cout << this->ToString() << std::endl;
 }
 
 /// -------------------- Scalar Calculations --------------------
@@ -181,8 +153,62 @@ float Vector::Length()
 	return sqrt(this->Dot(this));
 }
 
+// convert this vector to a unit vector.
+void Vector::ConvertToUnitVector()
+{
+	// divide each entry by the length of the vector
+	this->DivideScaler(this->Length());
+}
 
 
+/// --------------------Constructors --------------------
+// Create vector of size x with values y
+Vector::Vector(const int size, const float val)
+{
+	this->size = size;
+
+	// initialize array and set all values to val
+	this->vec = new float[size];
+	for(int i = 0; i < size; ++i)
+	{
+		this->vec[i] = val;
+	}
+}
+
+// Create vector with size y that will be the same size
+// as the array passed in. No checking is done to account
+// for ensuring this, so if a mistake is made it is on the
+// user's end. 
+Vector::Vector(const int size, float data[])
+{
+	this->size = size;
+
+	// copy array into new one
+	this->vec = new float[size];
+	for(int i = 0; i < size; ++i)
+	{
+		this->vec[i] = data[i];
+	}
+}
+
+// Construct this vector by copying another vector
+Vector::Vector(Vector* vec)
+{
+	this->size = vec->GetSize();
+	this->vec = new float[this->size];
+
+	for(int i = 0; i < this->size; ++i)
+	{
+		this->vec[i] = vec->GetVectorArray()[i];
+	}
+}
+
+
+// -------------------- Destructor --------------------
+Vector::~Vector()
+{
+	// pass
+}
 
 
 

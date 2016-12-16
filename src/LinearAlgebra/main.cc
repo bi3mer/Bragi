@@ -14,6 +14,7 @@ int main()
 	Vector vec3 = Vector(3, arr3);
 	Vector vec4 = Vector(3, 1);
 	Vector perp = Vector(3, arr4);
+	Vector test = Vector(&perp);
 
 	vec1.AddScalar(1);
 	vec2.MultiplyScaler(2);
@@ -42,6 +43,12 @@ int main()
 	// test length
 	vec1.PrintVector();
 	std::cout << "length: " << vec1.Length() << std::endl;
+
+	// convert to unit vector
+	std::cout << "convert to unit vector before and after: " << std::endl;
+	vec3.PrintVector();
+	vec3.ConvertToUnitVector();
+	vec3.PrintVector();
 
 
 	std::cout << "did i work? " << std::endl;
