@@ -132,7 +132,7 @@ float Vector::Dot(Vector* vector)
 	float total = 0;
 	for(int i = 0; i < this->size; ++i)
 	{
-		total += this->vec[i] * vector->GetVectorArray()[i];
+		total += (*this)[i] * (*vector)[i];
 	}
 
 	return total;
@@ -160,8 +160,13 @@ void Vector::ConvertToUnitVector()
 	this->DivideScaler(this->Length());
 }
 
+/// -------------------- operator overloading --------------------
+float& Vector::operator[](const int index)
+{
+	return this->vec[index];
+}
 
-/// --------------------Constructors --------------------
+/// -------------------- Constructors --------------------
 // Create vector of size x with values y
 Vector::Vector(const int size, const float val)
 {

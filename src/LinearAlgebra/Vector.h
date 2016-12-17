@@ -29,6 +29,9 @@ class Vector
 		float Length();
 		void ConvertToUnitVector();
 
+		// operator overloading
+		float& operator[](const int);
+
 		// constructors
 		Vector(const int, const float val=0);
 		Vector(const int, float[]);
