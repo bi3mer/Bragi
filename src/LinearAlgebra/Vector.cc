@@ -12,7 +12,7 @@ int Vector::GetSize()
 // TODO: try const int index and data
 void Vector::SetVectorPoint(const int index, const float data)
 {
-	this->vec[index] = data;
+	(*this)[index] = data;
 }
 
 float* Vector::GetVectorArray()
@@ -29,7 +29,7 @@ std::string Vector::ToString()
 
 	for(int i = 0; i < this->size; ++i)
 	{
-		str += std::to_string(this->vec[i]);
+		str += std::to_string((*this)[i]);
 
 		if(i < this-> size - 1)
 		{
@@ -53,7 +53,7 @@ void Vector::AddScalar(const float scalar)
 {
 	for(int i = 0; i < this->size; ++i)
 	{
-		this->vec[i] += scalar;
+		(*this)[i] += scalar;
 	}
 }
 
@@ -63,7 +63,7 @@ void Vector::MultiplyScaler(const float scalar)
 {
 	for(int i = 0; i < this->size; ++i)
 	{
-		this->vec[i] *= scalar;
+		(*this)[i] *= scalar;
 	}
 }
 
@@ -81,7 +81,7 @@ void Vector::DivideScaler(const float scalar)
 
 	for(int i = 0; i < this->size; ++i)
 	{
-		this->vec[i] /= scalar;
+		(*this)[i] /= scalar;
 	}
 }
 
@@ -98,7 +98,7 @@ void Vector::Add(Vector* vecToAdd, Vector* vecReference)
 	// add vectors
 	for(int i = 0; i < this->size; ++i)
 	{
-		vecReference->GetVectorArray()[i] = this->vec[i] + vecToAdd->GetVectorArray()[i];
+		(*vecReference)[i] = (*this)[i] + (*vecToAdd)[i];
 	}
 }
 
@@ -114,7 +114,7 @@ void Vector::Sub(Vector* vecToSub, Vector* vecReference)
 	// add vectors
 	for(int i = 0; i < this->size; ++i)
 	{
-		vecReference->GetVectorArray()[i] = this->vec[i] - vecToSub->GetVectorArray()[i];
+		(*vecReference)[i] = (*this)[i] - (*vecToSub)[i];
 	}
 }
 
@@ -176,7 +176,7 @@ Vector::Vector(const int size, const float val)
 	this->vec = new float[size];
 	for(int i = 0; i < size; ++i)
 	{
-		this->vec[i] = val;
+		(*this)[i] = val;
 	}
 }
 
@@ -192,7 +192,7 @@ Vector::Vector(const int size, float data[])
 	this->vec = new float[size];
 	for(int i = 0; i < size; ++i)
 	{
-		this->vec[i] = data[i];
+		(*this)[i] = data[i];
 	}
 }
 
@@ -204,7 +204,7 @@ Vector::Vector(Vector* vec)
 
 	for(int i = 0; i < this->size; ++i)
 	{
-		this->vec[i] = vec->GetVectorArray()[i];
+		(*this)[i] = (*vec)[i];
 	}
 }
 
