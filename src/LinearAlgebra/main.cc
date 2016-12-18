@@ -50,11 +50,17 @@ int main()
 	vec3.ConvertToUnitVector();
 	vec3.PrintVector();
 
-	// testing operator overloading
+	// testing [] operator overloading
 	vec3[1] = 2;
 	vec3.PrintVector();
-
 	std::cout << vec3[1] << " + " <<  vec4[1] << ": " << vec3[1] + vec4[1] << std::endl;
+
+	// testing + operator overloading
+	vec1.PrintVector();
+	vec2.PrintVector();
+	(vec1 + vec2).PrintVector();
+	(vec1 - vec2).PrintVector();
+	std::cout << (vec1 * vec2) << std::endl;
 
 	std::cout << "did i work? " << std::endl;
 

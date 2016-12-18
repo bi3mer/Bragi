@@ -9,12 +9,6 @@ int Vector::GetSize()
 	return this->size;
 }
 
-// TODO: try const int index and data
-void Vector::SetVectorPoint(const int index, const float data)
-{
-	(*this)[index] = data;
-}
-
 float* Vector::GetVectorArray()
 {
 	return this->vec;
@@ -82,6 +76,24 @@ void Vector::DivideScaler(const float scalar)
 	for(int i = 0; i < this->size; ++i)
 	{
 		(*this)[i] /= scalar;
+	}
+}
+
+// compute modulus on all elements of the vector
+void Vector::ModulusScalar(const int mod)
+{
+	for(int i = 0; i < this->size; ++i)
+	{
+		(*this)[i] = fmodf((*this)[i], mod);
+	}
+}
+
+// raie all elements of vector to power x
+void Vector::RaisePowerScalar(const float power)
+{
+	for(int i = 0; i < this->size; ++i)
+	{
+		(*this)[i] = pow((*this)[i], power);
 	}
 }
 
@@ -164,6 +176,28 @@ void Vector::ConvertToUnitVector()
 float& Vector::operator[](const int index)
 {
 	return this->vec[index];
+}
+
+// create a vector and add this and the passed in vector and
+// return the new vector
+Vector Vector::operator+(Vector vec)
+{
+	Vector newVector = Vector(this->size);
+	this->Add(&vec, &newVector);
+	return newVector;
+}
+
+Vector Vector::operator-(Vector vec)
+{
+	Vector newVector = Vector(this->size);
+	this->Sub(&vec, &newVector);
+	return newVector;
+}
+
+// for vectors this will represent the dot product
+float Vector::operator*(Vector vec)
+{
+	return this->Dot(&vec);
 }
 
 /// -------------------- Constructors --------------------

@@ -5,9 +5,6 @@ class Vector
 	public:
 		// Getters and Setters
 		int GetSize();
-
-		// TODO: try const int index and data
-		void SetVectorPoint(const int, const float);
 		float* GetVectorArray();
 
 		// Usefulc ommands
@@ -18,8 +15,8 @@ class Vector
 		void AddScalar(const float);
 		void MultiplyScaler(const float);
 		void DivideScaler(const float);
-		// modulus scalar
-		// pow scalar
+		void ModulusScalar(const int);
+		void RaisePowerScalar(const float);
 
 		// Vector Calculations
 		void Add(Vector*, Vector*);
@@ -31,6 +28,9 @@ class Vector
 
 		// operator overloading
 		float& operator[](const int);
+		Vector operator+(Vector);
+		Vector operator-(Vector);
+		float operator*(Vector);
 
 		// constructors
 		Vector(const int, const float val=0);
