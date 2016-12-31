@@ -8,7 +8,7 @@ int main()
 	float arr3[] = {6,7,8};
 	float arr4[] = {2,2,-2};
 
-	Vector vec = Vector(3);
+	Vector vec  = Vector(3);
 	Vector vec1 = Vector(3, arr1);
 	Vector vec2 = Vector(3, arr2);
 	Vector vec3 = Vector(3, arr3);
@@ -33,7 +33,7 @@ int main()
 	vec.PrintVector();
 
 	// test subtraction
-	vec1.Sub(&vec2, &vec);
+	vec1.Subtract(&vec2, &vec);
 	std::cout << "Subtraction of vector 1 and 2: " << std::endl;
 	vec.PrintVector();
 
@@ -63,6 +63,8 @@ int main()
 	std::cout << (vec1 * vec2) << std::endl;
 
 	std::cout << "did i work? " << std::endl;
+
+	std::cout << "test: " << std::endl;
 
 	return 0;
 }

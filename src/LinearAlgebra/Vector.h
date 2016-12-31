@@ -13,6 +13,7 @@ class Vector
 
 		// Scalar Calculations
 		void AddScalar(const float);
+		void SubtractScalar(const float);
 		void MultiplyScaler(const float);
 		void DivideScaler(const float);
 		void ModulusScalar(const int);
@@ -20,7 +21,7 @@ class Vector
 
 		// Vector Calculations
 		void Add(Vector*, Vector*);
-		void Sub(Vector*, Vector*);
+		void Subtract(Vector*, Vector*);
 		float Dot(Vector*);
 		bool IsPerpindicular(Vector*);
 		float Length();
@@ -31,6 +32,8 @@ class Vector
 		Vector operator+(Vector);
 		Vector operator-(Vector);
 		float operator*(Vector);
+		bool operator==(Vector);
+		bool operator!=(Vector);
 
 		// constructors
 		Vector(const int, const float val=0);

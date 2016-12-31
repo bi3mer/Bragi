@@ -51,6 +51,16 @@ void Vector::AddScalar(const float scalar)
 	}
 }
 
+// subtract a scalar number from the array representing
+// a vector in the class
+void Vector::SubtractScalar(const float scalar)
+{
+	for(int i = 0; i < this->size; ++i)
+	{
+		(*this)[i] -= scalar;
+	}
+}
+
 // multiplies a scalar number to the array representing
 // a vector in the class.
 void Vector::MultiplyScaler(const float scalar)
@@ -115,7 +125,7 @@ void Vector::Add(Vector* vecToAdd, Vector* vecReference)
 }
 
 // subtract this vector and another to create a new vecor
-void Vector::Sub(Vector* vecToSub, Vector* vecReference)
+void Vector::Subtract(Vector* vecToSub, Vector* vecReference)
 {
 	// check for mismatching vectors
 	if(this->size != vecToSub->size && this->size != vecReference->size)
@@ -190,7 +200,7 @@ Vector Vector::operator+(Vector vec)
 Vector Vector::operator-(Vector vec)
 {
 	Vector newVector = Vector(this->size);
-	this->Sub(&vec, &newVector);
+	this->Subtract(&vec, &newVector);
 	return newVector;
 }
 
@@ -198,6 +208,37 @@ Vector Vector::operator-(Vector vec)
 float Vector::operator*(Vector vec)
 {
 	return this->Dot(&vec);
+}
+
+// check if the two vectors are equal to each other
+bool Vector::operator==(Vector vec)
+{
+	// check for matching sizes
+	if(this->size == vec.GetSize())
+	{
+		for(int i = 0; i < this->size; ++i)
+		{
+			// if values are not the same return false
+			if((*this)[i] != vec[i])
+			{
+				return false;
+			}
+		}
+	}
+	else
+	{
+		// return for mismatching sizes
+		return false;
+	}
+
+	return true;
+}
+
+// check if two vectors are not equal to each other
+bool Vector::operator!=(Vector vec)
+{
+	// return opposite of ==
+	return !(*this == vec);
 }
 
 /// -------------------- Constructors --------------------
