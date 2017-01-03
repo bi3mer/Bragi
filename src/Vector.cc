@@ -112,7 +112,7 @@ void Vector::RaisePowerScalar(const float power)
 void Vector::Add(Vector* vecToAdd, Vector* vecReference)
 {
 	// check for mismatching vectors
-	if(this->size != vecToAdd->size && this->size != vecReference->size)
+	if(this->size != vecToAdd->size || this->size != vecReference->size)
 	{
 		throw std::overflow_error("Mismatching sizes for addition of two vectors.");
 	}
@@ -128,7 +128,7 @@ void Vector::Add(Vector* vecToAdd, Vector* vecReference)
 void Vector::Subtract(Vector* vecToSub, Vector* vecReference)
 {
 	// check for mismatching vectors
-	if(this->size != vecToSub->size && this->size != vecReference->size)
+	if(this->size != vecToSub->size || this->size != vecReference->size)
 	{
 		throw std::overflow_error("Mismatching sizes for subraction of two vectors.");
 	}
