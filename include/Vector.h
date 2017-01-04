@@ -7,7 +7,7 @@ class Vector
 		int GetSize();
 		float* GetVectorArray();
 
-		// Usefulc ommands
+		// Useful ommands
 		std::string ToString();
 		void PrintVector();
 

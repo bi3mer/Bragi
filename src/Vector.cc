@@ -30,7 +30,7 @@ std::string Vector::ToString()
 			str += ", ";
 		}
 	}
-
+	
 	return str;
 }
 
@@ -233,6 +233,8 @@ bool Vector::operator==(Vector vec)
 
 	return true;
 }
+
+// todo operator=
 
 // check if two vectors are not equal to each other
 bool Vector::operator!=(Vector vec)
