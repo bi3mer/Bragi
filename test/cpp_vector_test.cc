@@ -1,5 +1,6 @@
-#include "Vector.h"
+#include <math.h> 
 #include <iostream>
+#include "Vector.h"
 #include "gtest/gtest.h"
 
 float add1[] = {0,1,2};
@@ -204,6 +205,43 @@ TEST(cpp_vector_test, vector_dot)
     EXPECT_THROW(vec1.Dot(&vec4), std::overflow_error);
 }
 
+// test IsPerpindicular
+TEST(cpp_vector_test, vector_is_perpindicular)
+{
+    EXPECT_EQ(false, vec1.IsPerpindicular(&vec2));
+
+    float exp1[] = {1,2};
+    float exp2[] = {-2,1};
+
+    Vector perp1 = Vector(2, exp1);
+    Vector perp2 = Vector(2, exp2);
+
+    EXPECT_EQ(true, perp1.IsPerpindicular(&perp2));
+}
+
+// test Length
+TEST(cpp_vector_test, vector_length)
+{
+    float a1[] = {1,1,1,1};
+
+    Vector v1 = Vector(5, a1);
+
+    EXPECT_EQ(2, v1.Length());
+}
+
+// test ConvertToUnitVector
+TEST(cpp_vector_test, vector_conver_to_unit_vector)
+{
+    // get result for unit vector
+    float val = 1 / sqrt(2);
+    float e1[] = {val, val};
+    float a1[] = {1,1};
+    Vector v1 = Vector(2, a1);
+    v1.ConvertToUnitVector();
+    EXPECT_EQ(true, arraysEqual(2, v1.GetVectorArray(), e1));
+}
+
+/// -------------------- operator overloading --------------------
 // test: vec1 + vec2 operation
 TEST(cpp_vector_test, vector_operator_add)
 {
