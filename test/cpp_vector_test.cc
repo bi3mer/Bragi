@@ -32,6 +32,7 @@ bool arraysEqual(int size, float* arr1, float* arr2)
     return equal;
 }
 
+/// -------------------- useful commands --------------------
 // testing GetSize
 TEST(cpp_vector_test, vector_get_size)
 {
@@ -56,6 +57,7 @@ TEST(cpp_vector_test, vector_to_string)
     EXPECT_EQ(0, vec4.ToString().compare(vec2_str));
 }
 
+/// -------------------- Scalar Calculations --------------------
 // test AddScalar
 TEST(cpp_vector_test, vector_add_scalar)
 {
@@ -148,6 +150,47 @@ TEST(cpp_vector_test, vector_raise_power_scalar)
 
     EXPECT_EQ(true, arraysEqual(3, test1.GetVectorArray(), expected1));
     EXPECT_EQ(true, arraysEqual(2, test2.GetVectorArray(), expected2));
+}
+
+/// -------------------- Vector Calculations --------------------
+// test Add
+TEST(cpp_vector_test, vector_add)
+{
+    float expected1[] = {3.0,5.0,7.0};
+    float expected2[] = {1.0,3.0};
+
+    Vector test1 = Vector(3);
+    Vector test2 = Vector(2);
+
+    vec1.Add(&vec2, &test1);
+    vec4.Add(&vec5, &test2);
+
+    EXPECT_EQ(true, arraysEqual(3, test1.GetVectorArray(), expected1));
+    EXPECT_EQ(true, arraysEqual(2, test2.GetVectorArray(), expected2));
+}
+
+// test Subtract
+TEST(cpp_vector_test, vector_subtract)
+{
+    float expected1[] = {-3.0,-3.0,-3.0};
+    float expected2[] = {-1.0,-1.0};
+
+    Vector test1 = Vector(3);
+    Vector test2 = Vector(2);
+
+    vec1.Subtract(&vec2, &test1);
+    vec4.Subtract(&vec5, &test2);
+
+    EXPECT_EQ(true, arraysEqual(3, test1.GetVectorArray(), expected1));
+    EXPECT_EQ(true, arraysEqual(2, test2.GetVectorArray(), expected2));
+}
+
+// test Dot
+TEST(cpp_vector_test, vector_dot)
+{
+    EXPECT_EQ(14, vec1.Dot(&vec2));
+    EXPECT_EQ(2,  vec4.Dot(&vec5));
+    EXPECT_THROW(vec1.Dot(&vec4), std::overflow_error);
 }
 
 // test: vec1 + vec2 operation
