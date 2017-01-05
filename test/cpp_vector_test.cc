@@ -32,6 +32,16 @@ bool arraysEqual(int size, float* arr1, float* arr2)
     return equal;
 }
 
+TEST(cpp_google_test_functions, arrays_equal)
+{
+    float test1[] = {2,3,4,5};
+    float test2[] = {2,3,4,5};
+    float test3[] = {1,2,3,4};
+
+    EXPECT_EQ(true, arraysEqual(3, test1, test2));
+    EXPECT_EQ(false, arraysEqual(3, test1, test3));
+}
+
 /// -------------------- useful commands --------------------
 // testing GetSize
 TEST(cpp_vector_test, vector_get_size)
@@ -44,6 +54,7 @@ TEST(cpp_vector_test, vector_get_size)
 TEST(cpp_vector_test, vector_get_array)
 {
     EXPECT_EQ(true, arraysEqual(3, vec1.GetVectorArray(), add1));
+    EXPECT_EQ(false, arraysEqual(3, vec1.GetVectorArray(), add2));
     EXPECT_EQ(true, arraysEqual(2, vec4.GetVectorArray(), bad1));
 }
 
