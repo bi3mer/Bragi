@@ -90,11 +90,17 @@ void Vector::DivideScaler(const float scalar)
 }
 
 // compute modulus on all elements of the vector
-void Vector::ModulusScalar(const int mod)
+void Vector::ModulusScalar(const int scalar)
 {
+	// avoid divide by 0 case
+	if(scalar == 0)
+	{
+		throw std::overflow_error("Divide by zero exception");
+	}
+	
 	for(int i = 0; i < this->size; ++i)
 	{
-		(*this)[i] = fmodf((*this)[i], mod);
+		(*this)[i] = fmodf((*this)[i], scalar);
 	}
 }
 
@@ -277,11 +283,11 @@ Vector::Vector(const int size, float data[])
 Vector::Vector(Vector* vec)
 {
 	this->size = vec->GetSize();
-	this->vec = new float[this->size];
+	this->vec  = new float[this->size];
 
 	for(int i = 0; i < this->size; ++i)
 	{
-		(*this)[i] = (*vec)[i];
+		this->vec[i] = (*vec)[i];
 	}
 }
 
