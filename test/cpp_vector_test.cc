@@ -19,18 +19,18 @@ Vector vec5  = Vector(2, bad2);
 // different sizes in the aray.
 bool arraysEqual(int size, float* arr1, float* arr2)
 {
-    bool equal = true;
+    bool isEqual = true;
 
     for(int i = 0; i < size; ++i)
     {
         if(*(arr1 + i) != *(arr2 + i))
         {
-            equal = false;
+            isEqual = false;
             break;
         }
     }
 
-    return equal;
+    return isEqual;
 }
 
 TEST(cpp_google_test_functions, arrays_equal)
@@ -40,7 +40,7 @@ TEST(cpp_google_test_functions, arrays_equal)
     float test3[] = {1,2,3,4};
 
     EXPECT_EQ(true, arraysEqual(3, test1, test2));
-    EXPECT_EQ(false, arraysEqual(3, test1, test3));
+    EXPECT_EQ(false, arraysEqual(3, test1, test3));  
 }
 
 /// -------------------- useful commands --------------------
@@ -62,8 +62,8 @@ TEST(cpp_vector_test, vector_get_array)
 // testing GetString
 TEST(cpp_vector_test, vector_to_string)
 {
-    std::string vec1_str = "0.000000, 1.000000, 2.000000";
-    std::string vec2_str = "0.000000, 1.000000";
+    std::string vec1_str = std::string("0.000000, 1.000000, 2.000000");
+    std::string vec2_str = std::string("0.000000, 1.000000");
 
     EXPECT_EQ(0, vec1.ToString().compare(vec1_str));
     EXPECT_EQ(0, vec4.ToString().compare(vec2_str));
@@ -227,6 +227,12 @@ TEST(cpp_vector_test, vector_is_perpindicular)
     EXPECT_EQ(true, perp1.IsPerpindicular(&perp2));
 }
 
+// test PerpindicularVector
+TEST(cpp_vector_test, vector_get_perpindicular)
+{
+    EXPECT_ANY_THROW(vec1.PerpindicularVector(&vec1));
+}
+
 // test Length
 TEST(cpp_vector_test, vector_length)
 {
@@ -245,6 +251,34 @@ TEST(cpp_vector_test, vector_conver_to_unit_vector)
     Vector v1 = Vector(2, arr);
     v1.ConvertToUnitVector();
     EXPECT_EQ(true, arraysEqual(2, v1.GetVectorArray(), exp));
+}
+
+// test CosineTheta
+TEST(cpp_vector_test, vector_cosine_theta)
+{
+    float a1[] = {2,1};
+    float a2[] = {1,2};
+    float exp  = 4.0/5.0;
+
+    Vector v1 = Vector(2,a1);
+    Vector v2 = Vector(2,a2);
+
+    EXPECT_EQ(exp, v1.CosineTheta(&v2));
+    EXPECT_THROW(v1.CosineTheta(&vec1), std::overflow_error);
+}
+
+// test Angle
+TEST(cpp_vector_test, vector_angle)
+{
+    float a1[] = {2,1};
+    float a2[] = {1,2};
+    float exp  = 4.0/5.0;
+
+    Vector v1 = Vector(2,a1);
+    Vector v2 = Vector(2,a2);
+
+    EXPECT_NEAR(acos(exp), v1.Angle(&v2), 0.001);
+    EXPECT_THROW(v1.Angle(&vec1), std::overflow_error);
 }
 
 /// -------------------- operator overloading --------------------

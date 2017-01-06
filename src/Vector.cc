@@ -197,6 +197,12 @@ bool Vector::IsPerpindicular(Vector* vector)
 	return this->Dot(vector) == 0;
 }
 
+// todo: implement with matrix class in the fute
+void Vector::PerpindicularVector(const Vector* vector)
+{
+	throw "PerpindicularVector not implmented. Awaiting matrix class.";
+}
+
 // Compute the length of the vector.
 float Vector::Length()
 {
@@ -210,6 +216,18 @@ void Vector::ConvertToUnitVector()
 {
 	// divide each entry by the length of the vector
 	this->DivideScaler(this->Length());
+}
+
+// get value of cosine theta with (v*w)/(||v|| ||w||)
+float Vector::CosineTheta(Vector* vector)
+{
+	return this->Dot(vector)/(this->Length() * vector->Length());
+}
+
+// get angle between two vectors
+float Vector::Angle(Vector* vector)
+{
+	return acos(this->CosineTheta(vector));
 }
 
 /// -------------------- operator overloading --------------------

@@ -25,8 +25,11 @@ class Vector
 		void Subtract(Vector*, Vector*);
 		float Dot(Vector*);
 		bool IsPerpindicular(Vector*);
+		void PerpindicularVector(const Vector*);
 		float Length();
 		void ConvertToUnitVector();
+		float CosineTheta(Vector*);
+		float Angle(Vector*);
 
 		// operator overloading
 		float& operator[](const int);
