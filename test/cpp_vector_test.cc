@@ -165,6 +165,14 @@ TEST(cpp_vector_test, vector_raise_power_scalar)
 }
 
 /// -------------------- Vector Calculations --------------------
+// test Equals
+TEST(cpp_vector_test, vector_equals)
+{
+    EXPECT_EQ(true, vec1.Equals(&vec1));
+    EXPECT_EQ(false, vec1.Equals(&vec2));
+    EXPECT_EQ(false, vec1.Equals(&vec5));
+}
+
 // test Add
 TEST(cpp_vector_test, vector_add)
 {
@@ -223,9 +231,7 @@ TEST(cpp_vector_test, vector_is_perpindicular)
 TEST(cpp_vector_test, vector_length)
 {
     float a1[] = {1,1,1,1};
-
-    Vector v1 = Vector(5, a1);
-
+    Vector v1 = Vector(4, a1);
     EXPECT_EQ(2, v1.Length());
 }
 
@@ -234,14 +240,23 @@ TEST(cpp_vector_test, vector_conver_to_unit_vector)
 {
     // get result for unit vector
     float val = 1 / sqrt(2);
-    float e1[] = {val, val};
-    float a1[] = {1,1};
-    Vector v1 = Vector(2, a1);
+    float exp[] = {val, val};
+    float arr[] = {1,1};
+    Vector v1 = Vector(2, arr);
     v1.ConvertToUnitVector();
-    EXPECT_EQ(true, arraysEqual(2, v1.GetVectorArray(), e1));
+    EXPECT_EQ(true, arraysEqual(2, v1.GetVectorArray(), exp));
 }
 
 /// -------------------- operator overloading --------------------
+// test: [] operation
+TEST(cpp_vector_test, vector_operator_brackets)
+{
+    for(int i = 0; i < vec1.GetSize(); ++i)
+    {
+        EXPECT_EQ(add1[i], vec1[i]);
+    }
+}
+
 // test: vec1 + vec2 operation
 TEST(cpp_vector_test, vector_operator_add)
 {
@@ -300,6 +315,78 @@ TEST(cpp_vector_test, vector_operator_sub)
 
     // test mismatching sizes
     EXPECT_THROW(vec4 - vec1, std::overflow_error);
+}
+
+// test: vec1 * vec2 operation
+TEST(cpp_vector_test, vector_operator_dot)
+{
+    EXPECT_EQ(14, vec1 * vec2);
+    EXPECT_EQ(2,  vec4 * vec5);
+    EXPECT_THROW(vec1 * vec4, std::overflow_error);
+}
+
+// test: vec1 += vec2 operation
+TEST(cpp_vector_test, vector_operator_plus_equals)
+{
+    float expected1[] = {3.0,5.0,7.0};
+    float expected2[] = {1.0,3.0};
+
+    Vector test1 = Vector(vec1);
+    Vector test2 = Vector(vec4);
+
+    test1 += vec2;
+    test2 += vec5;
+
+    EXPECT_EQ(true, arraysEqual(3, test1.GetVectorArray(), expected1));
+    EXPECT_EQ(true, arraysEqual(2, test2.GetVectorArray(), expected2));
+}
+
+// test: vec1 == vec2 operation
+TEST(cpp_vector_test, vector_operator_equal_equals)
+{
+    EXPECT_EQ(true, vec1 == vec1);
+    EXPECT_EQ(false, vec1 == vec2);
+    EXPECT_EQ(false, vec1 == vec5);
+}
+
+// test: vec1 != vec2 operation
+TEST(cpp_vector_test, vector_operator_not_equal)
+{
+    EXPECT_EQ(false, vec1 != vec1);
+    EXPECT_EQ(true, vec1 != vec2);
+    EXPECT_EQ(true, vec1 != vec5);
+}
+
+/// -------------------- Constructors -------------------- 
+// test initialization with only size and potentially value
+TEST(cpp_vector_test, vector_constructor_size_and_value)
+{
+    Vector test = Vector(3);
+    float exp1[] = {0,0,0};
+    EXPECT_EQ(3, test.GetSize());
+    EXPECT_EQ(true, arraysEqual(3, test.GetVectorArray(), exp1));
+
+    test = Vector(4,1);
+    float exp2[] = {1,1,1,1};
+    EXPECT_EQ(4, test.GetSize());
+    EXPECT_EQ(true, arraysEqual(4, test.GetVectorArray(), exp2));
+}
+
+// test initialization with size and array
+TEST(cpp_vector_test, vector_constructor_size_and_array)
+{
+    Vector test = Vector(3, add1);
+    EXPECT_EQ(3, test.GetSize());
+    EXPECT_EQ(true, arraysEqual(3, test.GetVectorArray(), add1));
+}
+
+// test copy constructor
+TEST(cpp_vector_test, vector_copy_constructor)
+{
+    Vector vec = Vector(3, add1);
+    Vector test = Vector(&vec);
+    EXPECT_EQ(3, test.GetSize());
+    EXPECT_EQ(true, arraysEqual(3, test.GetVectorArray(), add1));
 }
 
 int main(int argc, const char * argv[])

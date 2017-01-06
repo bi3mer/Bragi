@@ -20,6 +20,7 @@ class Vector
 		void RaisePowerScalar(const float);
 
 		// Vector Calculations
+		bool Equals(Vector *);
 		void Add(Vector*, Vector*);
 		void Subtract(Vector*, Vector*);
 		float Dot(Vector*);
@@ -32,6 +33,7 @@ class Vector
 		Vector operator+(Vector);
 		Vector operator-(Vector);
 		float operator*(Vector);
+		void operator+=(Vector);
 		bool operator==(Vector);
 		bool operator!=(Vector);
 

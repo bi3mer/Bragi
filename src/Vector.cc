@@ -114,6 +114,30 @@ void Vector::RaisePowerScalar(const float power)
 }
 
 /// -------------------- Vector Calculations --------------------
+// test if the two vectors are equal to eachother
+bool Vector::Equals(Vector* vec)
+{
+	// check for matching sizes
+	if(this->size == vec->GetSize())
+	{
+		for(int i = 0; i < this->size; ++i)
+		{
+			// if values are not the same return false
+			if((*this)[i] != (*vec)[i])
+			{
+				return false;
+			}
+		}
+	}
+	else
+	{
+		// return for mismatching sizes
+		return false;
+	}
+
+	return true;
+}
+
 // add this vector and another to create a new vector
 void Vector::Add(Vector* vecToAdd, Vector* vecReference)
 {
@@ -216,28 +240,16 @@ float Vector::operator*(Vector vec)
 	return this->Dot(&vec);
 }
 
+// add vectors together
+void Vector::operator+=(Vector vec)
+{
+	this->Add(&vec, this);
+}
+
 // check if the two vectors are equal to each other
 bool Vector::operator==(Vector vec)
 {
-	// check for matching sizes
-	if(this->size == vec.GetSize())
-	{
-		for(int i = 0; i < this->size; ++i)
-		{
-			// if values are not the same return false
-			if((*this)[i] != vec[i])
-			{
-				return false;
-			}
-		}
-	}
-	else
-	{
-		// return for mismatching sizes
-		return false;
-	}
-
-	return true;
+	return this->Equals(&vec);
 }
 
 // todo operator=
