@@ -1,15 +1,16 @@
 #include <iostream>
+#include <algorithm>
 #include <stddef.h>
 #include <math.h> 
 #include "Vector.h"
 
 // -------------------- Get and Set Methods --------------------
-int Vector::GetSize()
+const int Vector::GetSize() const 
 {
 	return this->size;
 }
 
-float* Vector::GetVectorArray()
+const float*  Vector::GetVectorArray() const
 {
 	return this->vec;
 }
@@ -17,7 +18,7 @@ float* Vector::GetVectorArray()
 /// -------------------- useful commands --------------------
 // conver the array that represents the vector into a
 // string with commas between values.
-std::string Vector::ToString()
+const std::string Vector::ToString() const
 {
 	std::string str = "";
 
@@ -35,7 +36,7 @@ std::string Vector::ToString()
 }
 
 // print result of ToString with a new line.
-void Vector::PrintVector()
+void Vector::PrintVector() const
 {
 	std::cout << this->ToString() << std::endl;
 }
@@ -115,7 +116,7 @@ void Vector::RaisePowerScalar(const float power)
 
 /// -------------------- Vector Calculations --------------------
 // test if the two vectors are equal to eachother
-bool Vector::Equals(Vector* vec)
+const bool Vector::Equals(const Vector* vec) const
 {
 	// check for matching sizes
 	if(this->size == vec->GetSize())
@@ -139,7 +140,7 @@ bool Vector::Equals(Vector* vec)
 }
 
 // add this vector and another to create a new vector
-void Vector::Add(Vector* vecToAdd, Vector* vecReference)
+const void Vector::Add(const Vector* vecToAdd, Vector* vecReference) const
 {
 	// check for mismatching vectors
 	if(this->size != vecToAdd->size || this->size != vecReference->size)
@@ -155,7 +156,7 @@ void Vector::Add(Vector* vecToAdd, Vector* vecReference)
 }
 
 // subtract this vector and another to create a new vecor
-void Vector::Subtract(Vector* vecToSub, Vector* vecReference)
+const void Vector::Subtract(const Vector* vecToSub, Vector* vecReference) const
 {
 	// check for mismatching vectors
 	if(this->size != vecToSub->size || this->size != vecReference->size)
@@ -172,7 +173,7 @@ void Vector::Subtract(Vector* vecToSub, Vector* vecReference)
 
 // compute dot product between two vectors. If sizes don't match
 // overflow_error error is thrown
-float Vector::Dot(Vector* vector)
+const float Vector::Dot(const Vector* vector) const
 {
 	// check if sizes don't match
 	if(this->size != vector->size)
@@ -184,7 +185,7 @@ float Vector::Dot(Vector* vector)
 	float total = 0;
 	for(int i = 0; i < this->size; ++i)
 	{
-		total += (*this)[i] * (*vector)[i];
+		total += (*this)[i] * vector->GetVectorArray()[i];
 	}
 
 	return total;
@@ -192,19 +193,19 @@ float Vector::Dot(Vector* vector)
 
 // Check if this vector is perpindicular to the passed vector
 // by computing the dot product and seeing if the result is 0.
-bool Vector::IsPerpindicular(Vector* vector)
+const bool Vector::IsPerpindicular(const Vector* vector) const
 {
 	return this->Dot(vector) == 0;
 }
 
 // todo: implement with matrix class in the fute
-void Vector::PerpindicularVector(const Vector* vector)
+void Vector::PerpindicularVector(const Vector* vector) const
 {
 	throw "PerpindicularVector not implmented. Awaiting matrix class.";
 }
 
 // Compute the length of the vector.
-float Vector::Length()
+const float Vector::Length() const
 {
 	// return the square root of the dot product which is
 	// representative of the length of a vector.
@@ -219,13 +220,13 @@ void Vector::ConvertToUnitVector()
 }
 
 // get value of cosine theta with (v*w)/(||v|| ||w||)
-float Vector::CosineTheta(Vector* vector)
+const float Vector::CosineTheta(const Vector* vector) const
 {
 	return this->Dot(vector)/(this->Length() * vector->Length());
 }
 
 // get angle between two vectors
-float Vector::Angle(Vector* vector)
+const float Vector::Angle(const Vector* vector) const
 {
 	return acos(this->CosineTheta(vector));
 }
@@ -236,16 +237,21 @@ float& Vector::operator[](const int index)
 	return this->vec[index];
 }
 
+const float& Vector::operator[](const int index) const 
+{
+	return this->vec[index];
+}
+
 // create a vector and add this and the passed in vector and
 // return the new vector
-Vector Vector::operator+(Vector vec)
+const Vector Vector::operator+(const Vector vec) const
 {
 	Vector newVector = Vector(this->size);
 	this->Add(&vec, &newVector);
 	return newVector;
 }
 
-Vector Vector::operator-(Vector vec)
+const Vector Vector::operator-(const Vector vec) const
 {
 	Vector newVector = Vector(this->size);
 	this->Subtract(&vec, &newVector);
@@ -253,27 +259,41 @@ Vector Vector::operator-(Vector vec)
 }
 
 // for vectors this will represent the dot product
-float Vector::operator*(Vector vec)
+const float Vector::operator*(const Vector vec) const
 {
 	return this->Dot(&vec);
 }
 
 // add vectors together
-void Vector::operator+=(Vector vec)
+void Vector::operator+=(const Vector vec)
 {
 	this->Add(&vec, this);
 }
 
+void Vector::operator+=(const Vector* vec)
+{
+	this->Add(vec, this);
+}
+
+// subract vectors together
+void Vector::operator-=(const Vector vec)
+{
+	this->Subtract(&vec, this);
+}
+
+void Vector::operator-=(const Vector* vec)
+{
+	this->Subtract(vec, this);
+}
+
 // check if the two vectors are equal to each other
-bool Vector::operator==(Vector vec)
+const bool Vector::operator==(const Vector vec) const
 {
 	return this->Equals(&vec);
 }
 
-// todo operator=
-
 // check if two vectors are not equal to each other
-bool Vector::operator!=(Vector vec)
+const bool Vector::operator!=(const Vector vec) const
 {
 	// return opposite of ==
 	return !(*this == vec);
@@ -303,10 +323,7 @@ Vector::Vector(const int size, float data[])
 
 	// copy array into new one
 	this->vec = new float[size];
-	for(int i = 0; i < size; ++i)
-	{
-		(*this)[i] = data[i];
-	}
+	std::copy(data, data + this->size, this->vec);
 }
 
 // Construct this vector by copying another vector
@@ -314,11 +331,7 @@ Vector::Vector(Vector* vec)
 {
 	this->size = vec->GetSize();
 	this->vec  = new float[this->size];
-
-	for(int i = 0; i < this->size; ++i)
-	{
-		this->vec[i] = (*vec)[i];
-	}
+	std::copy(vec->GetVectorArray(), vec->GetVectorArray() + this->size, this->vec);
 }
 
 

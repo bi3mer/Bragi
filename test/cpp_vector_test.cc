@@ -17,7 +17,7 @@ Vector vec5  = Vector(2, bad2);
 
 // test if two arrays are equal. This doesn't account for
 // different sizes in the aray.
-bool arraysEqual(int size, float* arr1, float* arr2)
+bool arraysEqual(int size, const float* arr1, const float* arr2)
 {
     bool isEqual = true;
 
@@ -365,20 +365,54 @@ TEST(cpp_vector_test, vector_operator_plus_equals)
     float expected1[] = {3.0,5.0,7.0};
     float expected2[] = {1.0,3.0};
 
-    Vector test1 = Vector(vec1);
-    Vector test2 = Vector(vec4);
+    Vector test1 = Vector(3, add1);
+    Vector test2 = Vector(2, bad1);
 
     test1 += vec2;
     test2 += vec5;
 
     EXPECT_EQ(true, arraysEqual(3, test1.GetVectorArray(), expected1));
     EXPECT_EQ(true, arraysEqual(2, test2.GetVectorArray(), expected2));
+
+    Vector test3 = Vector(3, add1);
+    Vector test4 = Vector(2, bad1);
+
+    test3 += &vec2;
+    test4 += &vec5;
+
+    EXPECT_EQ(true, arraysEqual(3, test3.GetVectorArray(), expected1));
+    EXPECT_EQ(true, arraysEqual(2, test4.GetVectorArray(), expected2));
+}
+
+// test: vec1 -= vec2 operation
+TEST(cpp_vector_test, vector_operator_minus_equals)
+{
+    float expected1[] = {-3.0,-3.0,-3.0};
+    float expected2[] = {-1.0,-1.0};
+
+    Vector test1 = Vector(3, add1);
+    Vector test2 = Vector(2, bad1);
+
+    test1 -= vec2;
+    test2 -= vec5;
+
+    EXPECT_EQ(true, arraysEqual(3, test1.GetVectorArray(), expected1));
+    EXPECT_EQ(true, arraysEqual(2, test2.GetVectorArray(), expected2));
+
+    Vector test3 = Vector(3, add1);
+    Vector test4 = Vector(2, bad1);
+
+    test3 -= &vec2;
+    test4 -= &vec5;
+
+    EXPECT_EQ(true, arraysEqual(3, test3.GetVectorArray(), expected1));
+    EXPECT_EQ(true, arraysEqual(2, test4.GetVectorArray(), expected2));
 }
 
 // test: vec1 == vec2 operation
 TEST(cpp_vector_test, vector_operator_equal_equals)
 {
-    EXPECT_EQ(true, vec1 == vec1);
+    EXPECT_EQ(true, vec1  == vec1);
     EXPECT_EQ(false, vec1 == vec2);
     EXPECT_EQ(false, vec1 == vec5);
 }
@@ -387,8 +421,8 @@ TEST(cpp_vector_test, vector_operator_equal_equals)
 TEST(cpp_vector_test, vector_operator_not_equal)
 {
     EXPECT_EQ(false, vec1 != vec1);
-    EXPECT_EQ(true, vec1 != vec2);
-    EXPECT_EQ(true, vec1 != vec5);
+    EXPECT_EQ(true, vec1  != vec2);
+    EXPECT_EQ(true, vec1  != vec5);
 }
 
 /// -------------------- Constructors -------------------- 

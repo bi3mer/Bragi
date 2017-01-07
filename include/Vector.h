@@ -4,12 +4,12 @@ class Vector
 {
 	public:
 		// Getters and Setters
-		int GetSize();
-		float* GetVectorArray();
+		const int GetSize() const;
+		const float* GetVectorArray() const;
 
 		// Useful ommands
-		std::string ToString();
-		void PrintVector();
+		const std::string ToString() const;
+		void PrintVector() const;
 
 		// Scalar Calculations
 		void AddScalar(const float);
@@ -20,25 +20,29 @@ class Vector
 		void RaisePowerScalar(const float);
 
 		// Vector Calculations
-		bool Equals(Vector *);
-		void Add(Vector*, Vector*);
-		void Subtract(Vector*, Vector*);
-		float Dot(Vector*);
-		bool IsPerpindicular(Vector*);
-		void PerpindicularVector(const Vector*);
-		float Length();
+		const bool Equals(const Vector *) const;
+		const void Add(const Vector*, Vector*) const;
+		const void Subtract(const Vector*, Vector*) const;
+		const float Dot(const Vector*) const;
+		const bool IsPerpindicular(const Vector*) const;
+		void PerpindicularVector(const Vector*) const;
+		const float Length() const;
 		void ConvertToUnitVector();
-		float CosineTheta(Vector*);
-		float Angle(Vector*);
+		const float CosineTheta(const Vector*) const;
+		const float Angle(const Vector*) const;
 
 		// operator overloading
 		float& operator[](const int);
-		Vector operator+(Vector);
-		Vector operator-(Vector);
-		float operator*(Vector);
-		void operator+=(Vector);
-		bool operator==(Vector);
-		bool operator!=(Vector);
+		const float& operator[](const int) const;
+		const Vector operator+(const Vector) const;
+		const Vector operator-(const Vector) const;
+		const float operator*(const Vector) const;
+		void operator+=(const Vector);
+		void operator+=(const Vector*);
+		void operator-=(const Vector);
+		void operator-=(const Vector*);
+		const bool operator==(const Vector) const;
+		const bool operator!=(const Vector) const;
 
 		// constructors
 		Vector(const int, const float val=0);
