@@ -10,6 +10,8 @@ class Vector
 		// Useful ommands
 		std::string ToString() const;
 		void PrintVector() const;
+		bool LengthSquaredCalculated() const;
+		bool LengthCalculated() const;
 
 		// Scalar Calculations
 		void AddScalar(const float);

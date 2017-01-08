@@ -41,6 +41,18 @@ void Vector::PrintVector() const
 	std::cout << this->ToString() << std::endl;
 }
 
+// check whether length squared of vector has been calculated or not
+bool Vector::LengthSquaredCalculated() const
+{
+	return this->lengthSquared != -1;
+}
+
+// check whether length of vector has been calculated or not
+bool Vector::LengthCalculated() const
+{
+	return this->length != -1;
+}
+
 /// -------------------- Scalar Calculations --------------------
 // add a scalar number to the array representing a 
 // vector in the class.
@@ -208,7 +220,7 @@ void Vector::PerpindicularVector(const Vector* vector) const
 float Vector::LengthSquared() const
 {
 	// check if length squred has been calculated
-	if(this->lengthSquared == -1)
+	if(!this->LengthSquaredCalculated())
 	{
 		// calculate length squred
 		this->lengthSquared = this->Dot(this);
@@ -221,10 +233,10 @@ float Vector::LengthSquared() const
 float Vector::Length() const
 {
 	// check if length has been calculated
-	if(this->length == -1)
+	if(!this->LengthCalculated())
 	{
 		// check if length squared has ben calculated
-		if(this->lengthSquared == -1)
+		if(!this->LengthSquaredCalculated())
 		{
 			this->LengthSquared();
 		}
@@ -355,11 +367,28 @@ Vector::Vector(const int size, float data[]) : lengthSquared(-1), length(-1)
 }
 
 // Construct this vector by copying another vector
-Vector::Vector(Vector* vec) : lengthSquared(-1), length(-1)
+Vector::Vector(Vector* vec)
 {
+	// TODO: save length and lengthSqured
 	this->size = vec->GetSize();
 	this->vec  = new float[this->size];
 	std::copy(vec->GetVectorArray(), vec->GetVectorArray() + this->size, this->vec);
+	
+	// assign values based on what has and has not been calculated
+	if(vec->LengthCalculated())
+	{
+		this->length        = vec->Length();
+		this->lengthSquared = vec->LengthSquared();
+	}
+	else if(vec->LengthSquaredCalculated())
+	{
+		this->lengthSquared = vec->LengthSquared();
+	}
+	else
+	{
+		this->length        = -1;
+		this->lengthSquared = -1;
+	}
 }
 
 

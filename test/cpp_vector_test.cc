@@ -69,6 +69,25 @@ TEST(cpp_vector_test, vector_to_string)
     EXPECT_EQ(0, vec4.ToString().compare(vec2_str));
 }
 
+// testing LengthSquaredCalculated
+TEST(cpp_vector_test, vector_length_squared_calculated)
+{
+    Vector test = Vector(3, add1);
+    EXPECT_EQ(false, test.LengthSquaredCalculated());
+    test.LengthSquared();
+    EXPECT_EQ(true, test.LengthSquaredCalculated());
+}
+
+// testing LengthSquaredCalculated
+TEST(cpp_vector_test, vector_length_calculated)
+{
+    Vector test = Vector(3, add1);
+    EXPECT_EQ(false, test.LengthCalculated());
+    test.Length();
+    EXPECT_EQ(true, test.LengthSquaredCalculated());
+    EXPECT_EQ(true, test.LengthCalculated());
+}
+
 /// -------------------- Scalar Calculations --------------------
 // test AddScalar
 TEST(cpp_vector_test, vector_add_scalar)
