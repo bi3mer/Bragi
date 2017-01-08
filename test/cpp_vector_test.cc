@@ -234,6 +234,14 @@ TEST(cpp_vector_test, vector_get_perpindicular)
 }
 
 // test Length
+TEST(cpp_vector_test, vector_length_squared)
+{
+    float a1[] = {1,1,1,1};
+    Vector v1 = Vector(4, a1);
+    EXPECT_EQ(4, v1.LengthSquared());
+}
+
+// test Length
 TEST(cpp_vector_test, vector_length)
 {
     float a1[] = {1,1,1,1};

@@ -204,12 +204,36 @@ void Vector::PerpindicularVector(const Vector* vector) const
 	throw "PerpindicularVector not implmented. Awaiting matrix class.";
 }
 
+// compute the length of the vector without getting the length
+float Vector::LengthSquared() const
+{
+	// check if length squred has been calculated
+	if(this->lengthSquared == -1)
+	{
+		// calculate length squred
+		this->lengthSquared = this->Dot(this);
+	}
+
+	return this->lengthSquared;
+}
+
 // Compute the length of the vector.
 float Vector::Length() const
 {
-	// return the square root of the dot product which is
-	// representative of the length of a vector.
-	return sqrt(this->Dot(this));
+	// check if length has been calculated
+	if(this->length == -1)
+	{
+		// check if length squared has ben calculated
+		if(this->lengthSquared == -1)
+		{
+			this->LengthSquared();
+		}
+
+		// calculate the length
+		this->length = sqrt(this->lengthSquared);
+	}
+
+	return this->length;
 }
 
 // convert this vector to a unit vector.
@@ -300,12 +324,12 @@ bool Vector::operator==(const Vector vec) const
 bool Vector::operator!=(const Vector vec) const
 {
 	// return opposite of ==
-	return !(*this == vec);
+	return !this->Equals(&vec);
 }
 
 /// -------------------- Constructors --------------------
 // Create vector of size x with values y
-Vector::Vector(const int size, const float val)
+Vector::Vector(const int size, const float val) : lengthSquared(-1), length(-1)
 {
 	this->size = size;
 
@@ -321,7 +345,7 @@ Vector::Vector(const int size, const float val)
 // as the array passed in. No checking is done to account
 // for ensuring this, so if a mistake is made it is on the
 // user's end. 
-Vector::Vector(const int size, float data[])
+Vector::Vector(const int size, float data[]) : lengthSquared(-1), length(-1)
 {
 	this->size = size;
 
@@ -331,7 +355,7 @@ Vector::Vector(const int size, float data[])
 }
 
 // Construct this vector by copying another vector
-Vector::Vector(Vector* vec)
+Vector::Vector(Vector* vec) : lengthSquared(-1), length(-1)
 {
 	this->size = vec->GetSize();
 	this->vec  = new float[this->size];

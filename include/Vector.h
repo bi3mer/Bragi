@@ -26,6 +26,7 @@ class Vector
 		float Dot(const Vector*) const;
 		bool IsPerpindicular(const Vector*) const;
 		void PerpindicularVector(const Vector*) const;
+		float LengthSquared() const;
 		float Length() const;
 		void ConvertToUnitVector();
 		float CosineTheta(const Vector*) const;
@@ -52,7 +53,10 @@ class Vector
 		// destructor
 		~Vector();
 
-	private: 
+	private:
+		void initializeClassVariables() const;
 		int size;
+		mutable float lengthSquared;
+		mutable float length;
 		mutable float* vec;
 };
