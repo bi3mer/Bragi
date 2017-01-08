@@ -128,7 +128,7 @@ void Vector::RaisePowerScalar(const float power)
 
 /// -------------------- Vector Calculations --------------------
 // test if the two vectors are equal to eachother
-bool Vector::Equals(const Vector* vec) const
+bool Vector::Equals(const Vector* const vec) const
 {
 	// check for matching sizes
 	if(this->size == vec->GetSize())
@@ -152,7 +152,7 @@ bool Vector::Equals(const Vector* vec) const
 }
 
 // add this vector and another to create a new vector
-void Vector::Add(const Vector* vecToAdd, Vector* vecReference) const
+void Vector::Add(const Vector* const vecToAdd, Vector* const vecReference) const
 {
 	// check for mismatching vectors
 	if(this->size != vecToAdd->size || this->size != vecReference->size)
@@ -168,7 +168,7 @@ void Vector::Add(const Vector* vecToAdd, Vector* vecReference) const
 }
 
 // subtract this vector and another to create a new vecor
-void Vector::Subtract(const Vector* vecToSub, Vector* vecReference) const
+void Vector::Subtract(const Vector* const vecToSub, Vector* const vecReference) const
 {
 	// check for mismatching vectors
 	if(this->size != vecToSub->size || this->size != vecReference->size)
@@ -185,7 +185,7 @@ void Vector::Subtract(const Vector* vecToSub, Vector* vecReference) const
 
 // compute dot product between two vectors. If sizes don't match
 // overflow_error error is thrown
-float Vector::Dot(const Vector* vector) const
+float Vector::Dot(const Vector* const vector) const
 {
 	// check if sizes don't match
 	if(this->size != vector->size)
@@ -197,7 +197,7 @@ float Vector::Dot(const Vector* vector) const
 	float total = 0;
 	for(int i = 0; i < this->size; ++i)
 	{
-		total += (*this)[i] * vector->GetVectorArray()[i];
+		total += (*this)[i] * (*vector)[i];
 	}
 
 	return total;
@@ -205,13 +205,13 @@ float Vector::Dot(const Vector* vector) const
 
 // Check if this vector is perpindicular to the passed vector
 // by computing the dot product and seeing if the result is 0.
-bool Vector::IsPerpindicular(const Vector* vector) const
+bool Vector::IsPerpindicular(const Vector* const vector) const
 {
 	return this->Dot(vector) == 0;
 }
 
 // todo: implement with matrix class in the fute
-void Vector::PerpindicularVector(const Vector* vector) const
+void Vector::PerpindicularVector(const Vector* const vector) const
 {
 	throw "PerpindicularVector not implmented. Awaiting matrix class.";
 }
@@ -256,13 +256,13 @@ void Vector::ConvertToUnitVector()
 }
 
 // get value of cosine theta with (v*w)/(||v|| ||w||)
-float Vector::CosineTheta(const Vector* vector) const
+float Vector::CosineTheta(const Vector* const vector) const
 {
 	return this->Dot(vector)/(this->Length() * vector->Length());
 }
 
 // get angle between two vectors
-float Vector::Angle(const Vector* vector) const
+float Vector::Angle(const Vector* const vector) const
 {
 	return acos(this->CosineTheta(vector));
 }
@@ -310,7 +310,7 @@ void Vector::operator+=(const Vector vec)
 	this->Add(&vec, this);
 }
 
-void Vector::operator+=(const Vector* vec)
+void Vector::operator+=(const Vector* const vec)
 {
 	this->Add(vec, this);
 }
@@ -321,7 +321,7 @@ void Vector::operator-=(const Vector vec)
 	this->Subtract(&vec, this);
 }
 
-void Vector::operator-=(const Vector* vec)
+void Vector::operator-=(const Vector* const vec)
 {
 	this->Subtract(vec, this);
 }
@@ -357,7 +357,7 @@ Vector::Vector(const int size, const float val) : lengthSquared(-1), length(-1)
 // as the array passed in. No checking is done to account
 // for ensuring this, so if a mistake is made it is on the
 // user's end. 
-Vector::Vector(const int size, float data[]) : lengthSquared(-1), length(-1)
+Vector::Vector(const int size, const float data[]) : lengthSquared(-1), length(-1)
 {
 	this->size = size;
 
@@ -367,7 +367,7 @@ Vector::Vector(const int size, float data[]) : lengthSquared(-1), length(-1)
 }
 
 // Construct this vector by copying another vector
-Vector::Vector(Vector* vec)
+Vector::Vector(const Vector* const vec)
 {
 	// TODO: save length and lengthSqured
 	this->size = vec->GetSize();
@@ -375,20 +375,8 @@ Vector::Vector(Vector* vec)
 	std::copy(vec->GetVectorArray(), vec->GetVectorArray() + this->size, this->vec);
 	
 	// assign values based on what has and has not been calculated
-	if(vec->LengthCalculated())
-	{
-		this->length        = vec->Length();
-		this->lengthSquared = vec->LengthSquared();
-	}
-	else if(vec->LengthSquaredCalculated())
-	{
-		this->lengthSquared = vec->LengthSquared();
-	}
-	else
-	{
-		this->length        = -1;
-		this->lengthSquared = -1;
-	}
+	this->length        = vec->Length();
+	this->lengthSquared = vec->LengthSquared();
 }
 
 

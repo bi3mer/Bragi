@@ -22,17 +22,17 @@ class Vector
 		void RaisePowerScalar(const float);
 
 		// Vector Calculations
-		bool Equals(const Vector *) const;
-		void Add(const Vector*, Vector*) const;
-		void Subtract(const Vector*, Vector*) const;
-		float Dot(const Vector*) const;
-		bool IsPerpindicular(const Vector*) const;
-		void PerpindicularVector(const Vector*) const;
+		bool Equals(const Vector * const) const;
+		void Add(const Vector* const, Vector* const) const;
+		void Subtract(const Vector* const, Vector* const) const;
+		float Dot(const Vector* const) const;
+		bool IsPerpindicular(const Vector* const) const;
+		void PerpindicularVector(const Vector* const) const;
 		float LengthSquared() const;
 		float Length() const;
 		void ConvertToUnitVector();
-		float CosineTheta(const Vector*) const;
-		float Angle(const Vector*) const;
+		float CosineTheta(const Vector* const) const;
+		float Angle(const Vector* const) const;
 
 		// operator overloading
 		float& operator[](const int);
@@ -41,16 +41,16 @@ class Vector
 		Vector operator-(const Vector) const;
 		float operator*(const Vector) const;
 		void operator+=(const Vector);
-		void operator+=(const Vector*);
+		void operator+=(const Vector* const);
 		void operator-=(const Vector);
-		void operator-=(const Vector*);
+		void operator-=(const Vector* const);
 		bool operator==(const Vector) const;
 		bool operator!=(const Vector) const;
 
 		// constructors
 		Vector(const int, const float val=0);
-		Vector(const int, float[]);
-		Vector(Vector*);
+		Vector(const int, const float[]);
+		Vector(const Vector* const);
 
 		// destructor
 		~Vector();
