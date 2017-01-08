@@ -5,7 +5,7 @@
 #include "Vector.h"
 
 // -------------------- Get and Set Methods --------------------
-const int Vector::GetSize() const 
+int Vector::GetSize() const 
 {
 	return this->size;
 }
@@ -18,7 +18,7 @@ const float*  Vector::GetVectorArray() const
 /// -------------------- useful commands --------------------
 // conver the array that represents the vector into a
 // string with commas between values.
-const std::string Vector::ToString() const
+std::string Vector::ToString() const
 {
 	std::string str = "";
 
@@ -116,7 +116,7 @@ void Vector::RaisePowerScalar(const float power)
 
 /// -------------------- Vector Calculations --------------------
 // test if the two vectors are equal to eachother
-const bool Vector::Equals(const Vector* vec) const
+bool Vector::Equals(const Vector* vec) const
 {
 	// check for matching sizes
 	if(this->size == vec->GetSize())
@@ -140,7 +140,7 @@ const bool Vector::Equals(const Vector* vec) const
 }
 
 // add this vector and another to create a new vector
-const void Vector::Add(const Vector* vecToAdd, Vector* vecReference) const
+void Vector::Add(const Vector* vecToAdd, Vector* vecReference) const
 {
 	// check for mismatching vectors
 	if(this->size != vecToAdd->size || this->size != vecReference->size)
@@ -156,7 +156,7 @@ const void Vector::Add(const Vector* vecToAdd, Vector* vecReference) const
 }
 
 // subtract this vector and another to create a new vecor
-const void Vector::Subtract(const Vector* vecToSub, Vector* vecReference) const
+void Vector::Subtract(const Vector* vecToSub, Vector* vecReference) const
 {
 	// check for mismatching vectors
 	if(this->size != vecToSub->size || this->size != vecReference->size)
@@ -173,7 +173,7 @@ const void Vector::Subtract(const Vector* vecToSub, Vector* vecReference) const
 
 // compute dot product between two vectors. If sizes don't match
 // overflow_error error is thrown
-const float Vector::Dot(const Vector* vector) const
+float Vector::Dot(const Vector* vector) const
 {
 	// check if sizes don't match
 	if(this->size != vector->size)
@@ -193,7 +193,7 @@ const float Vector::Dot(const Vector* vector) const
 
 // Check if this vector is perpindicular to the passed vector
 // by computing the dot product and seeing if the result is 0.
-const bool Vector::IsPerpindicular(const Vector* vector) const
+bool Vector::IsPerpindicular(const Vector* vector) const
 {
 	return this->Dot(vector) == 0;
 }
@@ -205,7 +205,7 @@ void Vector::PerpindicularVector(const Vector* vector) const
 }
 
 // Compute the length of the vector.
-const float Vector::Length() const
+float Vector::Length() const
 {
 	// return the square root of the dot product which is
 	// representative of the length of a vector.
@@ -220,18 +220,22 @@ void Vector::ConvertToUnitVector()
 }
 
 // get value of cosine theta with (v*w)/(||v|| ||w||)
-const float Vector::CosineTheta(const Vector* vector) const
+float Vector::CosineTheta(const Vector* vector) const
 {
 	return this->Dot(vector)/(this->Length() * vector->Length());
 }
 
 // get angle between two vectors
-const float Vector::Angle(const Vector* vector) const
+float Vector::Angle(const Vector* vector) const
 {
 	return acos(this->CosineTheta(vector));
 }
 
 /// -------------------- operator overloading --------------------
+// Currently duplicate code is being used as all the operators
+// are using very simple operations. Should these become more 
+// complex, casts will be used in the non constant versions of 
+// the functions. 
 float& Vector::operator[](const int index)
 {
 	return this->vec[index];
@@ -244,14 +248,14 @@ const float& Vector::operator[](const int index) const
 
 // create a vector and add this and the passed in vector and
 // return the new vector
-const Vector Vector::operator+(const Vector vec) const
+Vector Vector::operator+(const Vector vec) const
 {
 	Vector newVector = Vector(this->size);
 	this->Add(&vec, &newVector);
 	return newVector;
 }
 
-const Vector Vector::operator-(const Vector vec) const
+Vector Vector::operator-(const Vector vec) const
 {
 	Vector newVector = Vector(this->size);
 	this->Subtract(&vec, &newVector);
@@ -259,7 +263,7 @@ const Vector Vector::operator-(const Vector vec) const
 }
 
 // for vectors this will represent the dot product
-const float Vector::operator*(const Vector vec) const
+float Vector::operator*(const Vector vec) const
 {
 	return this->Dot(&vec);
 }
@@ -287,13 +291,13 @@ void Vector::operator-=(const Vector* vec)
 }
 
 // check if the two vectors are equal to each other
-const bool Vector::operator==(const Vector vec) const
+bool Vector::operator==(const Vector vec) const
 {
 	return this->Equals(&vec);
 }
 
 // check if two vectors are not equal to each other
-const bool Vector::operator!=(const Vector vec) const
+bool Vector::operator!=(const Vector vec) const
 {
 	// return opposite of ==
 	return !(*this == vec);
